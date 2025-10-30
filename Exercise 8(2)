@@ -1,0 +1,75 @@
+// URK24CS1263 - FEBIYA S ANTO
+package URK24CS1263;
+
+import java.util.Scanner;
+
+// Thread to display even numbers
+class EvenThread extends Thread {
+    private int[] numbers;
+
+    public EvenThread(int[] numbers) {
+        this.numbers = numbers;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("\nEven Numbers:");
+        for (int num : numbers) {
+            if (num % 2 == 0) {
+                System.out.println(num);
+                try {
+                    Thread.sleep(2000); // 2 seconds delay
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+            }
+        }
+    }
+}
+
+// Thread to display odd numbers
+class OddThread extends Thread {
+    private int[] numbers;
+
+    public OddThread(int[] numbers) {
+        this.numbers = numbers;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("\nOdd Numbers:");
+        for (int num : numbers) {
+            if (num % 2 != 0) {
+                System.out.println(num);
+                try {
+                    Thread.sleep(2000); // 2 seconds delay
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+            }
+        }
+    }
+}
+
+public class Even_Odd_Threads {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[] numbers = new int[10];
+
+        System.out.println("Enter 10 numbers:");
+        for (int i = 0; i < 10; i++) {
+            numbers[i] = sc.nextInt();
+        }
+
+        // Create thread objects
+        EvenThread evenThread = new EvenThread(numbers);
+        OddThread oddThread = new OddThread(numbers);
+
+        // Start threads
+        evenThread.start();
+        oddThread.start();
+
+        sc.close();
+    }
+}
