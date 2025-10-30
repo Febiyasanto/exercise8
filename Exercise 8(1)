@@ -1,0 +1,75 @@
+// URK24CS1263 - FEBIYA S ANTO
+package URK24CS1263;
+
+import java.util.Scanner;
+
+// Runnable class to print each word
+class WordThread implements Runnable {
+    private String paragraph;
+
+    public WordThread(String paragraph) {
+        this.paragraph = paragraph;
+    }
+
+    @Override
+    public void run() {
+        String[] words = paragraph.split("\\s+"); // split by spaces
+        System.out.println("\nWords in the paragraph:");
+        for (String word : words) {
+            System.out.println(word);
+            try {
+                Thread.sleep(2000); // 2 seconds delay
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
+    }
+}
+
+// Runnable class to print each vowel
+class VowelThread implements Runnable {
+    private String paragraph;
+
+    public VowelThread(String paragraph) {
+        this.paragraph = paragraph;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("\nVowels in the paragraph:");
+        for (char ch : paragraph.toCharArray()) {
+            if ("AEIOUaeiou".indexOf(ch) != -1) {
+                System.out.println(ch);
+                try {
+                    Thread.sleep(2000); // 2 seconds delay
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+            }
+        }
+    }
+}
+
+public class Word_Vowel_Threads {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter a paragraph:");
+        String paragraph = sc.nextLine();
+
+        // Create Runnable objects
+        WordThread wordTask = new WordThread(paragraph);
+        VowelThread vowelTask = new VowelThread(paragraph);
+
+        // Create Thread objects
+        Thread wordThread = new Thread(wordTask);
+        Thread vowelThread = new Thread(vowelTask);
+
+        // Start both threads
+        wordThread.start();
+        vowelThread.start();
+
+        sc.close();
+    }
+}
